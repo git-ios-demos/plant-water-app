@@ -1,0 +1,3 @@
+mutation DeleteReading($id: ID!) {
+  deleteReading(id: $id)
+}

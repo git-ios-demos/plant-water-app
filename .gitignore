@@ -1,0 +1,10 @@
+# Xcode user data
+*.xcuserdatad
+*.xcuserdata
+
+# Build files
+build/
+DerivedData/
+
+# Xcode workspace
+*.xcworkspace

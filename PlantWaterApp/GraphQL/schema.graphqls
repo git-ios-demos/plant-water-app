@@ -1,0 +1,27 @@
+schema {
+  query: Query
+  mutation: Mutation
+}
+
+type Query {
+  readings: [Reading!]!
+}
+
+type Mutation {
+  submitReading(input: SubmitReadingInput!): Reading!
+  deleteReading(id: ID!): Boolean!
+  clearAllReadings: Boolean!
+}
+
+type Reading {
+  id: ID!
+  value: Int!
+  emoji: String!
+  date: String!
+}
+
+input SubmitReadingInput {
+  value: Int!
+  emoji: String!
+  date: String!
+}

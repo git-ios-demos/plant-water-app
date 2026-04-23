@@ -1,0 +1,8 @@
+query GetReadings {
+  readings {
+    id
+    value
+    emoji
+    date
+  }
+}

@@ -1,0 +1,8 @@
+mutation SubmitReading($input: SubmitReadingInput!) {
+  submitReading(input: $input) {
+    id
+    value
+    emoji
+    date
+  }
+}

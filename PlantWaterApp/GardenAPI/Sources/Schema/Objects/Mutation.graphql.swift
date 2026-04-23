@@ -1,0 +1,14 @@
+// swiftlint:disable all
+// @generated
+// This file was automatically generated and should not be edited.
+
+import ApolloAPI
+
+public extension Objects {
+  nonisolated static let Mutation = ApolloAPI.Object(
+    typename: "Mutation",
+    implementedInterfaces: [],
+    keyFields: nil
+  )
+}
+// swiftlint:enable all
