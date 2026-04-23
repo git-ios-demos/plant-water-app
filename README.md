@@ -5,7 +5,7 @@ iOS app using CoreBluetooth with an Arduino BLE peripheral, integrated with a Gr
 ## ✨ Features
 
 - CoreBluetooth central implementation (iOS)
-- Arduino BLE peripheral simulation
+- Arduino BLE peripheral
 - Real-time moisture readings via BLE
 - GraphQL backend for storing and fetching readings
 - SwiftUI + Swift Charts for data visualization
@@ -14,7 +14,7 @@ iOS app using CoreBluetooth with an Arduino BLE peripheral, integrated with a Gr
 ## 🗂 Project Structure
 
 - `PlantWaterApp/` – iOS application
-- `Arduino/` – BLE peripheral simulation (soil sensor)
+- `Arduino/` – BLE peripheral (soil sensor)
 
 ## 📡 Bluetooth Overview
 
