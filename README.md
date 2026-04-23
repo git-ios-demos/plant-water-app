@@ -39,6 +39,13 @@ This project demonstrates:
 - Modern iOS MVVM architecture (SwiftUI, dependency injection, protocol-based services)
 - Backend integration using GraphQL
 
+## 🚀 Getting Started
+
+1. Open `PlantWaterApp.xcodeproj`
+2. Run on iOS Simulator or device
+3. (Optional) Connect Arduino BLE sensor
+4. Use manual entry if sensor unavailable
+
 ## 🎥 Demo
 
 Short video showing real BLE sensor + iOS app integration:
