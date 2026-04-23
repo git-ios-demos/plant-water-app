@@ -1,6 +1,6 @@
 # 🌱 Plant Water App
 
-iOS app using CoreBluetooth with an Arduino BLE peripheral, integrated with a GraphQL backend for storing sensor readings and visualized using Swift Charts.
+iOS app using CoreBluetooth with an Arduino BLE peripheral, integrated with a GraphQL backend for storing soil moisture sensor readings, WeatherKit forecasts, and visualizations using Swift Charts.
 
 ## ✨ Features
 
@@ -15,10 +15,11 @@ iOS app using CoreBluetooth with an Arduino BLE peripheral, integrated with a Gr
 
 - `PlantWaterApp/` – iOS application
 - `Arduino/` – BLE peripheral (soil sensor)
+- `workers/` – Cloudflare Workers GraphQL backend with D1 database
 
 ## 📡 Bluetooth Overview
 
-The iOS app connects to a BLE peripheral that simulates a soil moisture sensor.  
+The iOS app connects to a BLE soil moisture sensor.  
 Sensor values are transmitted via characteristic notifications and processed in real time.
 
 ## 🧠 GraphQL Integration
@@ -35,16 +36,24 @@ Backend is implemented using Cloudflare Workers with a D1 SQL database.
 This project demonstrates:
 - BLE communication (CoreBluetooth)
 - Hardware/software interaction (Arduino + iOS)
-- Modern iOS MVVM architecture (SwiftUI, dependency injection, protocol based services)
+- Modern iOS MVVM architecture (SwiftUI, dependency injection, protocol-based services)
 - Backend integration using GraphQL
+
+## ⚙️ Engineering Notes
+
+- Built with Swift 6 and modern concurrency using `async/await`
+- Strict concurrency checking enabled (`Complete`)
+- Uses SwiftLint for consistent code style and quality
+- Includes unit tests using Swift Testing framework
+- Supports manual entry of soil readings for demo purposes when hardware is unavailable
+- Primary deployment target is iOS 26, but can be adjusted to iOS 18 if needed
 
 ## ⚠️ WeatherKit Note
 
 WeatherKit requires an Apple Developer account and proper entitlements to function.
 
 If unavailable, the app will still run and demonstrate:
-- BLE communication
+- Manual sensor reading input
 - GraphQL data flow
-- Chart visualization
 
 Weather data will simply not be displayed.
