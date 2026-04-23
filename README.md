@@ -39,6 +39,12 @@ This project demonstrates:
 - Modern iOS MVVM architecture (SwiftUI, dependency injection, protocol-based services)
 - Backend integration using GraphQL
 
+## 🎥 Demo
+
+Short video showing real BLE sensor + iOS app integration:
+
+[Watch Demo](https://www.dropbox.com/scl/fi/l2hpm5gkbknpjllxidbbi/plantWaterDemo.mp4?rlkey=hzbaq4kb9uawzbzueq78xm8us&st=tb7yivah&dl=0)
+
 ## ⚙️ Engineering Notes
 
 - Built with Swift 6 and modern concurrency using `async/await`
