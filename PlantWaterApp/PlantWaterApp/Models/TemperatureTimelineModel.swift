@@ -35,3 +35,11 @@ extension TemperatureTimelineModel.Kind: CustomDebugStringConvertible {
         "Kind(\(rawValue.uppercased()))"
     }
 }
+
+// Nesting `Kind` inside `TemperatureTimelineModel` keeps the enum scoped
+// to the model it belongs to, which makes the relationship more explicit
+// and avoids adding another global type unnecessarily.
+//
+// AI initially suggested pulling the enum out to file scope, but I kept it
+// nested because it is only meaningful within the context of a temperature
+// timeline entry.

@@ -97,3 +97,20 @@ struct SoilSensorView: View {
         }
     }
 }
+
+// The view is composed of smaller card subviews to keep the body readable
+// and maintainable as the UI grows. Each card encapsulates a focused piece
+// of UI and logic, which also makes it easier to test and iterate on
+// individual sections without affecting the entire screen.
+//
+// AI initially suggested keeping this as a single large view, but it was
+// refactored into smaller components to improve clarity and separation
+// of concerns.
+
+// The .onChange Modifier Notes:
+// When the BLE sensor first connects, readings can briefly fluctuate while
+// the stream stabilizes. A cancellable Task creates a short stabilization
+// window before enabling saves/normal display behavior.
+//
+// The task is cancelled when connection state changes or the view disappears
+// so stale async work does not update UI state after the screen is gone.

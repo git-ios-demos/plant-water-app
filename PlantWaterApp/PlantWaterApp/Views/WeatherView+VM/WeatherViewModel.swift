@@ -106,9 +106,6 @@ final class WeatherViewModel {
         }
     }
 
-    // AI originally appended all future entries after creating a dedicated .today entry,
-    // which could duplicate today's forecast in the chart. Filtered today out of the
-    // future timeline entries so each day appears only once.
     private func filterOutToday(
         from future: [DailyForecastModel],
         using calendar: Calendar,
@@ -117,3 +114,8 @@ final class WeatherViewModel {
         future.filter { !calendar.isDate($0.date, inSameDayAs: today) }
     }
 }
+
+// FilterOutToday Method:
+// AI originally appended all future entries after creating a dedicated .today entry,
+// which could duplicate today's forecast in the chart. Filtered today out of the
+// future timeline entries so each day appears only once.

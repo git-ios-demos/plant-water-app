@@ -37,3 +37,8 @@ struct SoilSenseTabView: View {
 #Preview {
     SoilSenseTabView()
 }
+
+// The root tab view owns the tab level view model so the Bluetooth service
+// is created once and shared across child views through environment injection.
+// This avoids recreating CoreBluetooth state per tab while keeping service
+// access behind view models.

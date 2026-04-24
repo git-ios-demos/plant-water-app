@@ -5,11 +5,7 @@ import GardenAPI
 protocol GraphQLClientProtocol {
     func fetchReadings() async throws -> [GetReadingsQuery.Data.Reading]
 
-    func submitReading(
-        value: Int,
-        emoji: String,
-        date: String
-    ) async throws -> SubmitReadingMutation.Data.SubmitReading
+    func submitReading(value: Int, emoji: String, date: String) async throws -> SubmitReadingMutation.Data.SubmitReading
 
     func deleteReading(id: String) async throws
 
@@ -29,6 +25,8 @@ final class GraphQLClient {
         self.apollo = ApolloClient(url: url)
     }
 
+    // Allows tests or local demos to swap the GraphQL endpoint without
+    // changing production initialization.
     func updateEndpoint(_ url: URL) {
         apollo = ApolloClient(url: url)
     }
@@ -36,17 +34,17 @@ final class GraphQLClient {
     func fetchReadings() async throws -> [GetReadingsQuery.Data.Reading] {
         let response = try await apollo.fetch(query: GetReadingsQuery(), cachePolicy: .networkOnly)
 
+        // Apollo can return a response with GraphQL errors even when the network
+        // request succeeds. AI initially treated a successful request as enough,
+        // but this layer checks both returned data and GraphQL errors so callers
+        // get clearer failures instead of silently receiving empty state.
         if let readings = response.data?.readings { return readings }
 
         try throwGraphQLErrorsIfPresent(response.errors)
         throw GraphQLClientError.noDataReturned
     }
 
-    func submitReading(
-        value: Int,
-        emoji: String,
-        date: String
-    ) async throws -> SubmitReadingMutation.Data.SubmitReading {
+    func submitReading(value: Int, emoji: String, date: String) async throws -> SubmitReadingMutation.Data.SubmitReading {
         guard let graphQLValue = Int32(exactly: value) else {
             throw GraphQLClientError.invalidReadingValue(value)
         }
@@ -55,6 +53,7 @@ final class GraphQLClient {
 
         let response = try await apollo.perform(mutation: SubmitReadingMutation(input: input))
 
+        // Same pattern: validate both data and GraphQL errors explicitly
         if let reading = response.data?.submitReading { return reading }
 
         try throwGraphQLErrorsIfPresent(response.errors)
@@ -105,5 +104,5 @@ enum GraphQLClientError: LocalizedError {
     }
 }
 
-// MARK: - GraphQLClientProtocol Conformance (For Testing)
+// MARK: - GraphQLClientProtocol Conformance (Testing)
 extension GraphQLClient: GraphQLClientProtocol { }

@@ -2,6 +2,12 @@ import Foundation
 import CoreBluetooth
 import SwiftUI
 
+// This service is intentionally @MainActor because CoreBluetooth delegate
+// callbacks update SwiftUI observed state such as connection status, raw sensor
+// values, saved readings, and live chart points.
+//
+// AI initially suggested scattered MainActor.run calls, but isolating the
+// service keeps UI state mutations centralized and easier to reason about.
 @MainActor
 @Observable
 final class SoilBluetoothService: NSObject {
@@ -29,6 +35,10 @@ final class SoilBluetoothService: NSObject {
         centralManager = CBCentralManager(delegate: self, queue: .main)
     }
 
+    // Scanning is gated by Bluetooth power state and local scanning state to
+    // prevent duplicate scans and inconsistent UI state. BLE scans are kept broad
+    // here and filtered manually because peripherals may not reliably
+    // advertise all expected service UUIDs.
     func startScanning() {
         guard let centralManager else { return }
 
@@ -105,9 +115,9 @@ final class SoilBluetoothService: NSObject {
         }
     }
 
-    // AI originally used explicit MainActor.run blocks.
-    // After making the entire service @MainActor, simplified the code and
-    // ensured async Tasks explicitly execute on the main actor for UI safety.
+    // These methods wrap async delete/clear work in a Task because the UI calls
+    // them synchronously from list actions. The service itself remains @MainActor,
+    // so state updates after the await stay isolated to the main actor.
     func deleteReading(_ reading: SensorReadingModel) {
         Task { @MainActor in
             do {
@@ -186,6 +196,11 @@ extension SoilBluetoothService: CBCentralManagerDelegate {
         let name = peripheral.name ?? ""
         let advertisedName = advertisementData[CBAdvertisementDataLocalNameKey] as? String ?? ""
 
+        // Stop scanning once the target peripheral is found to avoid duplicate
+        // discovery callbacks and unnecessary battery usage.
+        //
+        // Both the peripheral name and advertised local name are checked because
+        // BLE devices do not always populate both values consistently.
         let match = name == targetName || advertisedName == targetName
         guard match else { return }
 
@@ -239,7 +254,7 @@ extension SoilBluetoothService: CBPeripheralDelegate {
         }
     }
 
-    // AI initially used withUnsafeBytes/load(as:), which assumed a valid two-byte
+    // AI initially used withUnsafeBytes/load(as:), which assumed a valid two byte
     // aligned payload. Updated to validate payload length and parse bytes explicitly
     // so malformed BLE packets fail gracefully instead of risking a crash.
     func peripheral(

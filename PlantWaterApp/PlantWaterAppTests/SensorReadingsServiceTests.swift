@@ -162,3 +162,10 @@ final class MockGraphQLClient: GraphQLClientProtocol {
 private enum MockError: Error, Equatable {
     case forcedFailure
 }
+
+// Tests files follow the Arrange–Act–Assert (AAA) pattern to keep
+// structure consistent and easy to scan.
+//
+// - Arrange: set up mocks and initial state
+// - Act: perform the operation under test
+// - Assert: verify results and side effects

@@ -38,3 +38,10 @@ struct SensorReadingsService: SensorReadingsServiceProtocol {
         try await graphQLClient.clearAllReadings()
     }
 }
+
+// This service keeps the app-facing model layer separate from Apollo generated
+// GraphQL types. The view models work with SensorReadingModel, while this layer
+// handles networking calls, date formatting, and GraphQL to domain mapping.
+//
+// AI initially mixed Apollo response types into higher level app code, but this
+// boundary keeps the UI independent from the backend client implementation.

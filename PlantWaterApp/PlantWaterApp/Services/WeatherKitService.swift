@@ -47,9 +47,6 @@ struct WeatherKitService: WeatherKitServiceProtocol {
                 currentTempF: currentTempF,
                 future: future
             )
-            // AI originally collapsed all failures into failedToFetchWeather,
-            // which hid the specific date-range validation error.
-            // Updated the catch handling to preserve WeatherKitServiceError cases.
         } catch let error as WeatherKitServiceError {
             throw error
         } catch {
@@ -116,3 +113,17 @@ enum WeatherKitServiceError: LocalizedError {
         }
     }
 }
+
+// FetchWeather Method Notes:
+// Fetch all weather data concurrently using async let to avoid
+// sequential network calls. This significantly reduces total time
+// compared to awaiting each request individually.
+//
+// AI initially suggested sequential awaits for readability, but this
+// was adjusted to run requests in parallel since the calls are independent.
+
+// WeatherKitServiceError Notes:
+// AI originally collapsed all failures into `failedToFetchWeather`,
+// which masked more specific errors such as date range validation.
+// Updated error handling to preserve `WeatherKitServiceError` cases
+// for clearer debugging and more accurate failure reporting.

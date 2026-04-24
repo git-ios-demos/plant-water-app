@@ -138,3 +138,7 @@ struct SoilSensorControlsCardView: View {
         isWaitingForStableReading: true
     )
 }
+
+// This card adapts available actions based on connection state.
+// When connected, users can save live sensor readings. When not connected,
+// a manual entry path is provided to support demo scenarios without hardware.

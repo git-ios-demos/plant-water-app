@@ -92,7 +92,3 @@ struct SavedReadingsView: View {
         .padding(.vertical, 4)
     }
 }
-
-#Preview {
-//    SavedReadingsView()
-}
