@@ -70,3 +70,12 @@ If unavailable, the app will still run and demonstrate:
 - GraphQL data flow
 
 Weather data will simply not be displayed.
+
+## ⭐ Highlighted Commits
+
+- [Code Comments and AI Adjustments](https://github.com/git-ios-demos/plant-water-app/commit/ec63f1cb0fba3dac04b78a0a15648e90ca7a3cb6)
+
+  Adds inline documentation across the codebase, including notes where AI generated suggestions were reviewed and refined for correctness, safety, and architectural clarity.
+
+  Baseline (pre-commentary):  
+  [View Commit](https://github.com/git-ios-demos/plant-water-app/commit/399ab14a93b01b85f37505cf39d00d82d7a89e40)
